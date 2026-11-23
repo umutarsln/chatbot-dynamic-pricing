@@ -15,14 +15,15 @@ Klasör `src-layout` kuralındadır. Aynı klasörde:
 
 - Aynı otel/yorum/yanıt/kanal işi aynı dosyada kalsın.
 - İkinci tüketicisi olmayan yardımcıyı ayırma.
-- İki sorumluluk karışıyorsa böl (kanal adaptörü vs yanıt metni).
+- İki tür karışıyorsa böl: bileşen, hook, servis ve veri ayrı dosyada (`src-layout`).
 - Test: `foo.ts` yanında `foo.test.ts`. Şema/akış: `docs/context/`.
 
 ## Yazarken yasak
 
 - İmzayı tekrarlayan yorum (`english-comments`)
-- Tek çağrılı `utils` / `helpers` / `services` katmanı
-- Spekülatif `lib` / `types` / `hooks` / `utils` / `helpers` klasörü
+- Tek çağrılı `utils` / `helpers` / `lib` katmanı
+- Spekülatif `lib` / `types` / `utils` / `helpers` klasörü
+- İçi boş `components` / `hooks` / `services` / `data` klasörü
 - Davranışı değiştirmeyen sarmalayıcı veya re-export
 
 ## Temizlik ve mimari — her turda değil

@@ -1,6 +1,6 @@
 ---
 description: API, veri ve sunucu işi değişince ilgili docs/context/backend akışını güncelle.
-globs: src/app/**/*.ts,src/lib/**/*.ts,src/server/**/*.ts,src/middleware.ts,middleware.ts,src/proxy.ts,proxy.ts
+globs: src/app/**/*.ts,src/services/**/*.ts,src/middleware.ts,middleware.ts,src/proxy.ts,proxy.ts
 alwaysApply: false
 ---
 

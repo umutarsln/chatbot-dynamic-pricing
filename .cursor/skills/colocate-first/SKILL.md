@@ -24,8 +24,8 @@ Yeni dosya, yeni klasör veya mevcut dosyayı bölme bu turdaysa bu skill’i ok
 Klasör seçimi `src-layout` kuralında. Bu skill aynı klasörün içinde geçerlidir: yeni sorumluluk, o işi yapan dosyaya gider.
 
 - Sayfa: `src/app/<ekran>/page.tsx`. Route: `src/app/api/.../route.ts`
-- Bileşen `src/components`, kanal `src/server`, tarayıcı depo `src/storage`, örnek veri `src/data`, betik `src/scripts`
-- `src/lib`, `src/types`, `src/hooks`, `src/utils`, `src/helpers` açma
+- Bileşen `src/components/<özellik>`, paylaşılan hook `src/hooks`, servis `src/services/<özellik>`, veri `src/data`, tarayıcı depo `src/storage`, betik `src/scripts`
+- `src/lib`, `src/utils`, `src/helpers` açma. Hook ve servis klasörü ancak `src-layout` satırı dolunca açılır
 - Harita: `docs/context/` (changelog yok)
 
 ## Colocate vs böl

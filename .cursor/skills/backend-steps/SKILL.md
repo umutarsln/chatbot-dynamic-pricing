@@ -56,7 +56,7 @@ Oturumdaki otel kimliği. İsteğe bağlı: `status`, `channel`.
 Oturum doğrulama. Yorum tablosu.
 
 ## Adımlar
-1. Oturumu doğrula — dosya: `src/server/auth.ts` — yan etki: yok — hata: 401
+1. Oturumu doğrula — dosya: `src/services/auth/session.ts` — yan etki: yok — hata: 401
 2. Yorumları süz — dosya: `src/app/api/reviews/route.ts` — yan etki: yok — hata: 500
 3. Özet döndür — dosya: `src/app/api/reviews/route.ts` — yan etki: yok — hata: yok
 ```

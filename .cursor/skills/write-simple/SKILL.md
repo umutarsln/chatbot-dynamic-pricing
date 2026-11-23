@@ -21,8 +21,10 @@ Bu ürün küçük. Hexagonal klasör, `application/` / `infrastructure/`, media
 | --- | --- | --- |
 | UI | Sayfa, form | `src/app` sayfası, `src/components` |
 | HTTP | `route.ts` ince kalır | `src/app/api` |
-| Kural | Puan ölçeği, yanıt durumu, otel kapsamı — ikinci çağıran olunca | Önce route içi; sonra `src/server` |
-| Adaptör | Kanal HTTP, imza, ham payload | `src/server` |
+| Hook | İkinci bileşenin paylaştığı tarayıcı davranışı | `src/hooks` |
+| Kural | Puan ölçeği, yanıt durumu, otel kapsamı — ikinci çağıran veya dış sistem olunca | `src/services/<özellik>` |
+| Adaptör | Kanal HTTP, imza, ham payload | `src/services/<özellik>` |
+| Veri | Anahtarsız sabit veya örnek kayıt | `src/data` |
 
 Bağımlılık içeri: adaptör kuralı bilir, kural Next.js veya kanal SDK’sı bilmez.
 
@@ -31,7 +33,7 @@ Bağımlılık içeri: adaptör kuralı bilir, kural Next.js veya kanal SDK’s�
 - `IReviewRepository`, `ListReviewsUseCase`, DI konteyner
 - Tek Google istemcisi için `ChannelPort`
 - `Result`/`Either` her fonksiyonda
-- `src/lib/services` “doğru katman” diye
+- `src/lib/services` “doğru katman” diye. Servis `src/services/<özellik>` altındadır
 
 ```ts
 // ❌ BAD — port for one vendor

@@ -1,33 +1,49 @@
 ---
-description: src klasör yerleşimi. Sayfa app'te, HTTP app/api'de, bileşen, kanal, depo ve örnek veri ayrı.
+description: src klasör yerleşimi. Sayfa, bileşen, hook, servis ve veri ayrı durur.
 alwaysApply: true
 ---
 
 # src yerleşimi
 
-Next yalnızca `src/app/**/route.ts` servis eder. Route ince kalır: isteği okur, `src/server` çağırır, JSON döner.
+Kod türüne göre ayrılır. Sayfa ve route ince kalır. Görünüm bileşende, paylaşılan tarayıcı davranışı hook'ta, iş kuralı ve dış çağrı serviste, anahtarsız sabit veri `data` içinde durur.
+
+Kaynak: `ai-chatbot-reputation` (`app`, `components/<ekran>`, `data`) ve `ai-chatbot-fe` (`components/<özellik>`, `components/ui`, `hooks`, modül `services/`, `data`).
 
 | Ne | Nereye |
 | --- | --- |
 | Sayfa | `src/app/<ekran>/page.tsx` |
 | HTTP | `src/app/api/<özellik>/route.ts` |
-| Bileşen | `src/components/<ekran>/` |
-| Kanal / Prisma çağrısı | `src/server/` |
+| Bileşen | `src/components/<özellik>/` |
+| Alan-nötr ilkel | `src/components/ui/` |
+| Hook | `src/hooks/use-<ad>.ts` |
+| Servis | `src/services/<özellik>/` |
+| Veri | `src/data/` |
 | Tarayıcı `localStorage` | `src/storage/` |
-| Anahtarsız örnek veri | `src/data/` |
 | Tek seferlik betik | `src/scripts/` |
+
+Route isteği okur, `src/services` çağırır, JSON döner. Sayfa servis veya kanal çağrısı gömmez.
+
+- Bileşen bir ekrana veya yeteneğe aittir. İki özelliğin paylaştığı, alan bilmeyen kontrol `src/components/ui/` altındadır.
+- Hook `use` ile başlar ve React tarayıcı davranışı taşır. Tek bileşenin hook'u o bileşenin dosyasında kalır; ikinci tüketici olunca `src/hooks` altına çıkar.
+- Servis sunucu iş kuralı, dış sistem ve kalıcı yazmadır. Dosya işi söyler (`fetch-reviews.ts`). Tek route'un birkaç satırlık yardımcısı route içinde kalır; dış sistem veya ikinci çağıran varsa servise çıkar.
+- `src/data` anahtarsız sabit veya örnek veridir. Secret, oturum ve canlı kayıt burada durmaz.
 
 Aynı klasörde dosya bölme `colocate-first`. Test, `foo.ts` yanında `foo.test.ts`.
 
 ```ts
-// ❌ BAD — sayfa, route ve kanal aynı dizinde
-src/app/reviews/sync/route.ts
+// ❌ BAD — sayfa, hook, servis ve veri aynı dizinde
+src/app/reviews/page.tsx
+src/app/reviews/use-reviews.ts
 src/app/reviews/prisma-reviews.ts
+src/app/reviews/sample-hotels.ts
 
 // ✅ GOOD
 src/app/reviews/page.tsx
+src/components/reviews/review-list.tsx
+src/hooks/use-review-filters.ts
 src/app/api/reviews/sync/route.ts
-src/server/prisma-reviews.ts
+src/services/reviews/fetch-reviews.ts
+src/data/sample-hotels.ts
 ```
 
-Yasak: `src/helpers`, `src/utils`, `src/lib`, `src/services`, barrel `index.ts`. Küçük fonksiyon sahibinin dosyasında kalır.
+Yasak: `src/helpers`, `src/utils`, `src/lib`, barrel `index.ts`, boş klasör. Küçük fonksiyon sahibinin dosyasında kalır. Otai'deki `src/platform/**` ağacı bu repoya kopyalanmaz; servis karşılığı `src/services/<özellik>/` olur.
