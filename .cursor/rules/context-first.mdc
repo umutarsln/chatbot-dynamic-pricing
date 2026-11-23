@@ -1,0 +1,14 @@
+---
+description: Her sohbette önce yaşayan bağlam indeksini oku; ürün davranışını kod taramadan önce dokümandan al.
+alwaysApply: true
+---
+
+# Önce bağlam
+
+Her sohbetin başında `docs/context/INDEX.md` oku. Ürün davranışı indekste varsa repoyu baştan tarama; ayrıntı yalnızca ilgili şema veya akış dosyasından gelir.
+
+- Arayüz (ekran, bileşen, görünür durum) → `ui-schema` skill
+- API, veri, sunucu işi ve diğer backend → `backend-steps` skill
+- Terimler → `docs/context/domain.md`
+
+Kod değişince ilgili dokümanı **aynı turda** güncelle. Ekran veya akış eklendi/silindi/yeniden adlandırıldıysa indeks satırını da güncelle. Değişiklik günlüğü tutma; dosyayı yerinde güncelle.

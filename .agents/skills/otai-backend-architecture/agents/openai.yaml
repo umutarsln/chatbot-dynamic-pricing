@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Backend Architecture"
+  short_description: "Govern backend boundaries and audit workflows"
+  default_prompt: "Use $otai-backend-architecture to add, refactor, or audit this Otai backend area with correct routing, security, data, and dependency boundaries."

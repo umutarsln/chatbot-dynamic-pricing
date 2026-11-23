@@ -1,0 +1,21 @@
+---
+description: API, veri ve sunucu işi değişince ilgili docs/context/backend akışını güncelle.
+globs: src/app/**/*.ts,src/lib/**/*.ts,src/server/**/*.ts,src/middleware.ts,middleware.ts,src/proxy.ts,proxy.ts
+alwaysApply: false
+---
+
+# Backend adımları
+
+API, veri, sunucu eylemi, middleware/proxy veya sunucu işi değişince ilgili `docs/context/backend/*.md` dosyasını yerinde güncelle. Yeni akış için yeni dosya aç ve `docs/context/INDEX.md` içine satır ekle.
+
+Akış alanları: tetik, girdi, çıktı, bağımlılık, numaralı adımlar. Her adımda dosya, yan etki ve hata.
+
+Biçim ve şablon: `backend-steps` skill. İndeks güncellemesi: `project-context` skill.
+
+```ts
+// ❌ BAD — route ekleyip akış dokümanını atlamak
+export async function POST(request: Request) { /* ... */ }
+
+// ✅ GOOD — aynı turda docs/context/backend/yanit-yayinla.md adımlarını yaz
+export async function POST(request: Request) { /* ... */ }
+```

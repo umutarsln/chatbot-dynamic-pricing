@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Release Quality"
+  short_description: "Run Otai release and migration quality gates"
+  default_prompt: "Use $otai-release-quality to verify this change with clean builds, types, lint, tests, i18n, and migration checks."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Tenancy Security"
+  short_description: "Enforce tenant and auth security boundaries"
+  default_prompt: "Use $otai-tenancy-security to review this data-access change for tenant scope, route authorization, and secret safety."

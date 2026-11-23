@@ -1,0 +1,23 @@
+---
+description: Kaynak yorumları İngilizce ve yalnızca neden için; imza ne yaptığını söyler.
+globs: "**/*.ts,**/*.tsx,**/*.js,**/*.jsx"
+alwaysApply: false
+---
+
+# Comments: English, why not what
+
+Source comments (`//`, block, JSDoc, TSDoc) are **English**. User-facing copy lives in the UI schema or i18n files, not in comments.
+
+Comment the **why** the code cannot show (constraint, trade-off, non-obvious invariant). Do **not** add a docstring that restates the name, params, or return type.
+
+```ts
+// ❌ BAD — restates the signature
+/** Returns the hotel id from the session. */
+function getHotelId(session: Session): string {}
+
+// ✅ GOOD — records a constraint the signature hides
+/** Hotel id comes from the verified session, never from the request body. */
+function getHotelId(session: Session): string {}
+```
+
+Exceptions: third-party license headers, legally required verbatim text.

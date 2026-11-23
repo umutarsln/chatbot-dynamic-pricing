@@ -1,0 +1,20 @@
+---
+description: Shorthand kodları (RV, CM, GACM, PR, CBol, DOC, TR) workflow tetikler.
+alwaysApply: true
+---
+
+# Shorthand
+
+Message **is**, **starts with**, or **ends with** a code → run the workflow. Extra words are parameters. Ambiguous → one question.
+
+| Code | Workflow |
+| --- | --- |
+| **RV** | Pre-submit review: `pre-submit-review` skill. `[P1]`/`[P2]`/`[P3]` + `file:line`. `tsc --noEmit`; Vitest varsa ilgili testler. P1/P2 varken CM/PR/GACM yok. |
+| **CM** | One conventional commit message (`commit-message-conventions.mdc`). Message only; do not run git. |
+| **GACM** | Grouped `git add` + HEREDOC commit per group. Copy-paste only; do not run git. |
+| **CBol** | Split by topic into multiple commits (foundation first). Copy-paste; do not run git. |
+| **PR** | English title + `Summary` / `What Changed` / `Security Notes`. Do not run `gh pr create` unless the user also said to open the PR. |
+| **DOC** | Update living context: `docs/context/INDEX.md` and the matching `ui/` or `backend/` file. |
+| **TR** | Reply in Turkish until the user switches language. |
+
+Codes in one message run in order (`RV` then `PR`). Commit/PR text is English unless **TR** is also present. Explicit “commit yap” / “PR aç” still follows the user git/PR rules and may run commands; the codes above do not.

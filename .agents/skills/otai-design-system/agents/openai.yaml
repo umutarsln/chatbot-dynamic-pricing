@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Design System"
+  short_description: "Apply Otai surface-specific design rules"
+  default_prompt: "Use $otai-design-system to design or review this admin, guest chat, or widget interface."

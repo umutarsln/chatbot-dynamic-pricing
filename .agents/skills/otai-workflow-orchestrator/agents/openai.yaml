@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Workflow Orchestrator"
+  short_description: "Route Otai tasks to the required skills"
+  default_prompt: "Use $otai-workflow-orchestrator to classify this task and activate the required Otai skills in the correct order."

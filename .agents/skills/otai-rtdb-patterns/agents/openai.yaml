@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai RTDB Patterns"
+  short_description: "Apply safe RTDB data and migration patterns"
+  default_prompt: "Use $otai-rtdb-patterns to design this RTDB change with safe paths, transactions, idempotency, indexes, and migration."

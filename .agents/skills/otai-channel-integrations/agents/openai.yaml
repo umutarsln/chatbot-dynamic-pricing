@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Channel Integrations"
+  short_description: "Build safe WhatsApp and Telegram workflows"
+  default_prompt: "Use $otai-channel-integrations to implement or review this WhatsApp or Telegram webhook and worker workflow."

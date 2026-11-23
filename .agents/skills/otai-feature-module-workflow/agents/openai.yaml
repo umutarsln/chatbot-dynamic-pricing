@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Feature Module Workflow"
+  short_description: "Keep flags permissions and APIs aligned"
+  default_prompt: "Use $otai-feature-module-workflow to add or change this tenant feature across module flags, page permissions, and API authorization."

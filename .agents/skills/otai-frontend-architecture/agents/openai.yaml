@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai Frontend Architecture"
+  short_description: "Govern frontend boundaries and component placement"
+  default_prompt: "Use $otai-frontend-architecture to add, refactor, or audit this Otai frontend area with correct ownership, dependencies, and client boundaries."

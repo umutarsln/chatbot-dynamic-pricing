@@ -1,0 +1,24 @@
+---
+description: Görevi bitti saymadan önce bağlam dokümanı, test, tsc ve güvenlik; P1 açıkla teslim yok.
+alwaysApply: true
+---
+
+# Bitti = test + güvenlik
+
+Davranış değiştiyse görevi bitti demeden önce:
+
+1. Ekran değiştiyse `docs/context/ui/*.md`, akış değiştiyse `docs/context/backend/*.md` bu turda güncel. Yeni/silinen/yeniden adlandırılan kayıt `INDEX.md` satırında. Yoksa iş bitmedi (`DOC`).
+2. Değişen davranışa test yaz (`testing` skill). İlk domain koduysa Vitest’i o turda kur.
+3. `npx tsc --noEmit` çalıştır. Test runner varsa ilgili dosyaya `npx vitest run <file>`.
+4. Auth, otel sınırı, secret, doğrulama, public yüzey: negatif senaryo (401/403, yanlış otel, 429).
+5. P1 (sızıntı, auth bypass, çapraz otel) varsa düzeltmeden teslim etme.
+
+Yalnızca doküman veya yorum değiştiyse test koşma; yine de secret basma.
+
+| Risk | Aksiyon |
+| --- | --- |
+| Kritik / yüksek | Düzelt, sonra teslim |
+| Orta | Düzelt veya kullanıcıya sor |
+| Belirsiz | Sor; varsayılan fail-closed |
+
+`RV` ek inceleme ister. “Testler geçti” tek başına yetmez.

@@ -1,0 +1,21 @@
+---
+description: Kod yazarken write-simple skill oku; minimal, sade katman, overengineering yok.
+alwaysApply: true
+---
+
+# Yazarken sade
+
+`src/` altına davranış yazıyor veya değiştiriyorsan bu turda `write-simple` skill oku. Teslim sırası `minimal-first`; klasör `src-layout`; aynı klasörde `colocate-first`; **nasıl yazılacağı** bu kural.
+
+- İstenmeyen esneklik, “ileride kanal/AI” katmanı, UseCase/Repository/DI yok.
+- Katman ancak gerçek sınırda: UI → kural → kanal adaptörü. Tek implementasyonken port/interface yok.
+- Domain Next.js `Request` import etmez; sayfa/route kanal HTTP’yi gömmez.
+- Yeni soyutlama ikinci gerçek tüketicide doğar, spekülasyonda değil.
+
+```ts
+// ❌ BAD — one route, three types
+class ListReviewsUseCase { constructor(private repo: IReviewRepository) {} }
+
+// ✅ GOOD — logic stays in the route until a second caller exists
+export async function GET() { /* session hotel + query */ }
+```

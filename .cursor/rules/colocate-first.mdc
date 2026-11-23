@@ -1,0 +1,36 @@
+---
+description: Yeni kodu mevcut sahibe koy; rastgele dosya açma; yazarken slop kokusunu kes. Dosya/klasör/bölme işinde colocate-first skill oku.
+alwaysApply: true
+---
+
+# Önce aynı dosya
+
+Yeni kod, o işi zaten yapan dosyaya gider. Boş klasör, barrel `index.ts`, geçiş sarmalayıcı, “ileride lazım” dosya yok.
+
+Yalnızca yeni dosya, yeni klasör veya mevcut dosyayı bölme varsa `colocate-first` skill oku. Sıradan düzenlemede bu kural yeter.
+
+## Yerleşim
+
+Klasör `src-layout` kuralındadır. Aynı klasörde:
+
+- Aynı otel/yorum/yanıt/kanal işi aynı dosyada kalsın.
+- İkinci tüketicisi olmayan yardımcıyı ayırma.
+- İki sorumluluk karışıyorsa böl (kanal adaptörü vs yanıt metni).
+- Test: `foo.ts` yanında `foo.test.ts`. Şema/akış: `docs/context/`.
+
+## Yazarken yasak
+
+- İmzayı tekrarlayan yorum (`english-comments`)
+- Tek çağrılı `utils` / `helpers` / `services` katmanı
+- Spekülatif `lib` / `types` / `hooks` / `utils` / `helpers` klasörü
+- Davranışı değiştirmeyen sarmalayıcı veya re-export
+
+## Temizlik ve mimari — her turda değil
+
+| Tetik | Oku |
+| --- | --- |
+| `deslop`, stil / `any` | kişisel `deslop` |
+| `AI slop`, sarmalayıcı, ölü kod | kişisel `ai-slop-cleaner` |
+| chat / agent / tool / RAG seçimi | `ai-architect` subagent |
+
+Kişisel skill kopyalama. Teslim sırası `minimal-first`; nasıl yazılacağı `write-simple`; yer ve koku bu kural.

@@ -1,0 +1,22 @@
+---
+description: Minimum teslim, DRY, önce bu repoda benzer kalıp ara.
+alwaysApply: true
+---
+
+# Minimal kod, DRY, keşif
+
+Aynı işi daha az kodla bitir. Soyutlama veya “ileride lazım” katmanı ekleme. `src/` yazarken katman ve YAGNI için `write-simple` skill.
+
+## Teslim sırası
+
+1. Kabul kriterini karşılayan minimum davranış
+2. Gerekli hata ve sınır durumları
+3. Cila — yalnızca istendiyse
+
+## DRY
+
+Aynı işlem iki dosyada durmasın: tek yardımcı, çağıranlar oradan gelsin.
+
+## Keşif
+
+Yeni özellik veya kalıptan önce bu repoda benzer kullanım ara. Varsa onu örnek al. Belirsizse kullanıcıya sor: benzer davranış hangi dosyada?

@@ -1,0 +1,29 @@
+---
+description: Conventional commit ve PR metni İngilizce; CM / PR / GACM shorthand’inde kullan.
+alwaysApply: true
+---
+
+# Commit and PR messages
+
+Engineering artifacts are **English** unless the user asks otherwise. This rule applies when writing a commit or PR message (`CM`, `PR`, `GACM`, `CBol`).
+
+## Commit
+
+`<prefix>(<scope>): <imperative summary>`
+
+Prefixes: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`.
+Scopes: `reviews`, `replies`, `channels`, `auth`, `ui`, `context`.
+
+```
+feat(reviews): list pending reviews for the active hotel
+fix(replies): reject publish when the review belongs to another hotel
+docs(context): document the home screen schema
+```
+
+## Pull request
+
+When the user asks for a PR message (`PR`), output title + body only unless they also asked to open the PR.
+
+1. `Summary` — 1–2 sentences
+2. `What Changed` — short bullets
+3. `Security Notes` — always present; say “none” if none

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Otai AI Workflows"
+  short_description: "Build observable and guarded AI workflows"
+  default_prompt: "Use $otai-ai-workflows to implement or review this model, tool, streaming, tracing, fallback, and prompt-cache flow."

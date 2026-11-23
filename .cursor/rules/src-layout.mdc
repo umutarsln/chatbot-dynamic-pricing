@@ -1,0 +1,33 @@
+---
+description: src klasör yerleşimi. Sayfa app'te, HTTP app/api'de, bileşen, kanal, depo ve örnek veri ayrı.
+alwaysApply: true
+---
+
+# src yerleşimi
+
+Next yalnızca `src/app/**/route.ts` servis eder. Route ince kalır: isteği okur, `src/server` çağırır, JSON döner.
+
+| Ne | Nereye |
+| --- | --- |
+| Sayfa | `src/app/<ekran>/page.tsx` |
+| HTTP | `src/app/api/<özellik>/route.ts` |
+| Bileşen | `src/components/<ekran>/` |
+| Kanal / Prisma çağrısı | `src/server/` |
+| Tarayıcı `localStorage` | `src/storage/` |
+| Anahtarsız örnek veri | `src/data/` |
+| Tek seferlik betik | `src/scripts/` |
+
+Aynı klasörde dosya bölme `colocate-first`. Test, `foo.ts` yanında `foo.test.ts`.
+
+```ts
+// ❌ BAD — sayfa, route ve kanal aynı dizinde
+src/app/reviews/sync/route.ts
+src/app/reviews/prisma-reviews.ts
+
+// ✅ GOOD
+src/app/reviews/page.tsx
+src/app/api/reviews/sync/route.ts
+src/server/prisma-reviews.ts
+```
+
+Yasak: `src/helpers`, `src/utils`, `src/lib`, `src/services`, barrel `index.ts`. Küçük fonksiyon sahibinin dosyasında kalır.

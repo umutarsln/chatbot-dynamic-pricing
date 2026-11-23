@@ -1,0 +1,21 @@
+---
+description: Görünen arayüz değişince ilgili docs/context/ui şemasını güncelle.
+globs: src/app/**/*.tsx,src/app/**/*.css,src/components/**/*.tsx,src/components/**/*.css,src/hooks/**/*.ts,src/hooks/**/*.tsx
+alwaysApply: false
+---
+
+# Arayüz şeması
+
+Görünen arayüz (rota, düzen, durum, etkileşim) değişince ilgili `docs/context/ui/*.md` dosyasını yerinde güncelle. Yeni ekran için yeni dosya aç ve `docs/context/INDEX.md` içine satır ekle.
+
+Şema alanları: rota, amaç, aktör, düzen (bölge, bileşen, veri, durumlar: boş / yükleniyor / hata / dolu), etkileşim, bağlı backend.
+
+Biçim ve şablon: `ui-schema` skill. İndeks güncellemesi: `project-context` skill.
+
+```tsx
+// ❌ BAD — ekranı değiştirip şemayı bırakmak
+<InboxList reviews={reviews} />
+
+// ✅ GOOD — aynı turda docs/context/ui/inbox.md düzen ve durum tablosunu güncelle
+<InboxList reviews={reviews} />
+```
