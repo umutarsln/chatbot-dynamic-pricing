@@ -7,7 +7,8 @@ Sayfalar, `src/app/(workspace)/layout.tsx` altındaki ortak layout'u kullanır. 
 | `/dashboard` | `src/components/dashboard/dashboard-overview.tsx`: gelir metrikleri, fiyat grafiği ve fırsat özeti |
 | `/pricing-calendar` | `src/components/pricing/pricing-calendar.tsx`: seçili 7/14/30 günlük fiyat/doluluk takvimi |
 | `/price-recommendations` | `src/components/pricing/price-recommendations.tsx`: artış/indirim filtreleri, öneriler ve örnekte uygulama |
-| `/competitors` | `src/components/pricing/competitor-analysis.tsx`: seçili oda tipinin rakip karşılaştırması |
+| `/competitors` | `src/components/competitors/makcorps-pilot.tsx`: beş otellik Makcorps pilotu; adres eşleşmesi ve canlı fiyat sorgusu |
+| `/competitors/usage` | Yerel Makcorps kurulumu, veri saklama/kullanım durumu ve sağlayıcı soruları |
 | `/pricing-rules` | `src/components/pricing/pricing-rules.tsx`: seçili oda tipinin taban/tavan fiyatı ve örnek yayınlama çerçevesi |
 | `/weather/history` | `src/components/weather/weather-history.tsx`: kalıcı geçmiş arşivi, tarih/bölge seçimi ve veri aktarımı |
 | `/weather` | `src/components/weather/weather-panel.tsx`: canlı hava verisi ve bölge seçimi |
@@ -16,4 +17,4 @@ Sayfalar, `src/app/(workspace)/layout.tsx` altındaki ortak layout'u kullanır. 
 
 `src/components/pricing/pricing-provider.tsx` oda tipi, fiyat ufku ve örnekte uygulanan fiyatları ortak layout kapsamında tutar. Client navigation sırasında seçimler ve uygulanan fiyatlar korunur; tam yenilemede örnek başlangıç değerlerine döner. Öneri durum filtresi yalnızca öneriler sayfasına aittir ve tekrar girişte Tümü olur. Fiyat hesapları önceki örnek senaryoyla aynıdır.
 
-Hava durumu ve geçmiş arşiv sayfalarında fiyat scope kontrolleri/raporu gösterilmez. Rakip ve kural sayfalarında yalnızca oda tipi seçilir. Hava paneli yalnızca kendi sayfasında mount olur; diğer sayfalar hava API isteği başlatmaz. Ayrıntı: [Hava durumu](weather.md).
+Hava durumu, geçmiş arşiv ve rakip pilotu sayfalarında örnek fiyat scope kontrolleri/raporu gösterilmez. Kural sayfasında yalnızca oda tipi seçilir. Hava paneli yalnızca kendi sayfasında mount olur; diğer sayfalar hava API isteği başlatmaz. Rakip pilotunda canlı veriler örnek oda/fiyat hesaplarına bağlanmaz. Ayrıntı: [Hava durumu](weather.md), [Rakip pilotu](competitors.md).
