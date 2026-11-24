@@ -7,8 +7,8 @@ Sayfalar, `src/app/(workspace)/layout.tsx` altındaki ortak layout'u kullanır. 
 | `/dashboard` | `src/components/dashboard/dashboard-overview.tsx`: gelir metrikleri, fiyat grafiği ve fırsat özeti |
 | `/pricing-calendar` | `src/components/pricing/pricing-calendar.tsx`: seçili 7/14/30 günlük fiyat/doluluk takvimi |
 | `/price-recommendations` | `src/components/pricing/price-recommendations.tsx`: artış/indirim filtreleri, öneriler ve örnekte uygulama |
-| `/competitors` | `src/components/competitors/makcorps-pilot.tsx`: beş otellik Makcorps pilotu; adres eşleşmesi ve canlı fiyat sorgusu |
-| `/competitors/usage` | Yerel Makcorps kurulumu, veri saklama/kullanım durumu ve sağlayıcı soruları |
+| `/competitors` | `src/components/competitors/competitor-prices.tsx`: açılışta tek fiyat turu, çoklu otel filtresi ve kanal karşılaştırma tablosu |
+| `/competitors/setup` | `src/components/competitors/makcorps-pilot.tsx`: ad/adres eşleştirmesi ve manuel doğrulama |
 | `/pricing-rules` | `src/components/pricing/pricing-rules.tsx`: seçili oda tipinin taban/tavan fiyatı ve örnek yayınlama çerçevesi |
 | `/weather/history` | `src/components/weather/weather-history.tsx`: kalıcı geçmiş arşivi, tarih/bölge seçimi ve veri aktarımı |
 | `/weather` | `src/components/weather/weather-panel.tsx`: canlı hava verisi ve bölge seçimi |
