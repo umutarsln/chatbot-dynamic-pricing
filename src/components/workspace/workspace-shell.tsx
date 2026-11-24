@@ -11,7 +11,7 @@ const navigation = [
   { icon: "overview", label: "Genel bakış", href: "/dashboard", title: "Gelire genel bakış", description: "Talebi takip edin, fiyat fırsatlarını değerlendirin." },
   { icon: "calendar", label: "Fiyat takvimi", href: "/pricing-calendar", title: "Fiyat takvimi", description: "Konaklama tarihine göre önerilen fiyatları ve doluluğu inceleyin." },
   { icon: "sparkle", label: "Fiyat önerileri", href: "/price-recommendations", title: "Fiyat önerileri", description: "Fiyat değişikliklerini değerlendirin ve örnekte uygulayın." },
-  { icon: "competitors", label: "Rakip analizi", href: "/competitors", title: "Rakip analizi", description: "Benzer otellerin fiyatlarını karşılaştırın, pazardaki yerinizi görün." },
+  { icon: "competitors", label: "Rakip analizi", href: "/competitors", title: "Rakip analizi", description: "Antalya’daki otellerde fiyat kapsamını ve veri doğruluğunu kontrol edin." },
   { icon: "rules", label: "Fiyat kuralları", href: "/pricing-rules", title: "Fiyat kuralları", description: "Oda kategorinizin fiyat sınırlarını ve yayınlama yaklaşımını inceleyin." },
   { icon: "weather", label: "Hava durumu", href: "/weather", title: "Antalya hava durumu", description: "Bölgenizin güncel koşullarını ve 7 günlük tahminini takip edin." },
 ] as const;
@@ -20,9 +20,10 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const page = navigation.find((item) => item.href === pathname || pathname.startsWith(`${item.href}/`)) ?? navigation[0];
   const isWeather = pathname === "/weather" || pathname.startsWith("/weather/");
+  const isPilot = pathname === "/competitors" || pathname.startsWith("/competitors/");
   const [collapsed, setCollapsed] = useState(false);
   const pricing = usePricing();
-  const showPricing = !isWeather;
+  const showPricing = !isWeather && !isPilot;
   const showPeriod = ["/dashboard", "/pricing-calendar", "/price-recommendations"].includes(pathname);
 
   function downloadReport() {
@@ -52,10 +53,10 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
         <div className="sidebar-bottom"><div className="assistant-status"><Icon name="sparkle" size={16} /><div><strong>Kontrol sizde.</strong><p>Önerileri inceleyip karar verin.</p></div></div><div className="sidebar-footer"><span>Otai Revenue</span><button className="icon-button collapse-button" aria-label={collapsed ? "Menüyü genişlet" : "Menüyü daralt"} aria-expanded={!collapsed} onClick={() => setCollapsed(!collapsed)}><Icon name="panel" /></button></div></div>
       </aside>
       <main id="main" className="main">
-        <section className="page-heading"><div><div className="heading-context"><span className="status-dot" />Doğru oda. Doğru zaman. Doğru fiyat.</div><h1>{pathname === "/weather/history" ? "Geçmiş hava durumu" : page.title}</h1><p>{pathname === "/weather/history" ? "Bölgenizin geçmiş hava verilerini alın, saklayın ve karşılaştırın." : page.description}</p></div>{showPeriod && <button className="button secondary" onClick={downloadReport}><Icon name="download" size={16} />Raporu indir</button>}</section>
+        <section className="page-heading"><div><div className="heading-context"><span className="status-dot" />Doğru oda. Doğru zaman. Doğru fiyat.</div><h1>{pathname === "/weather/history" ? "Geçmiş hava durumu" : pathname === "/competitors/usage" ? "Veri kullanımı ve kurulum" : page.title}</h1><p>{pathname === "/weather/history" ? "Bölgenizin geçmiş hava verilerini alın, saklayın ve karşılaştırın." : page.description}</p></div>{showPeriod && <button className="button secondary" onClick={downloadReport}><Icon name="download" size={16} />Raporu indir</button>}</section>
         {showPricing && <div className="scope-bar"><div className="scope-hotel"><Icon name="hotel" size={17} /><strong>Otai Sahil Oteli</strong><span className="scope-divider" /><span>TRY · gecelik</span></div><div className="scope-controls"><label className="period-select"><select aria-label="Oda tipi" value={pricing.roomType} onChange={(event) => pricing.setRoomType(event.target.value as RoomType)}>{Object.entries(rooms).map(([value, item]) => <option key={value} value={value}>{item.name}</option>)}</select><Icon name="down" size={14} /></label>{showPeriod && <label className="period-select"><Icon name="calendar" size={16} /><select aria-label="Tahmin dönemi" value={pricing.horizon} onChange={(event) => pricing.setHorizon(event.target.value)}>{[7, 14, 30].map((days) => <option key={days} value={days}>Önümüzdeki {days} gün</option>)}</select><Icon name="down" size={14} /></label>}</div></div>}
         <div className="workspace-page" key={pathname}>{children}</div>
-        <footer className="main-footer"><span><span className="mini-brand">otai</span>Dinamik fiyatlandırma ve gelir yönetimi.</span><span>{isWeather ? "Hava verisi Open-Meteo’dan alınır." : "Fiyat ve doluluk verileri örnektir."}</span></footer>
+        <footer className="main-footer"><span><span className="mini-brand">otai</span>Dinamik fiyatlandırma ve gelir yönetimi.</span><span>{isWeather ? "Hava verisi Open-Meteo’dan alınır." : isPilot ? "Makcorps · oturumluk yerel pilot" : "Fiyat ve doluluk verileri örnektir."}</span></footer>
       </main>
     </div>
   );

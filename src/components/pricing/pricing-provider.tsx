@@ -30,15 +30,8 @@ function usePricingState() {
   const adr = revenue / soldNights;
   const pending = dates.filter((day) => day.suggested !== day.current && !day.applied);
   const range = `${dayFormat.format(dates[0].date)} – ${dayFormat.format(dates.at(-1)!.date)} 2026`;
-  const competitors = [
-    { name: "Sahil Park Hotel", price: Math.round(room.base * 1.06 / 50) * 50, occupancy: 82 },
-    { name: "Marina Beach Resort", price: Math.round(room.base * 1.14 / 50) * 50, occupancy: 88 },
-    { name: "Azure Coast Hotel", price: Math.round(room.base * .96 / 50) * 50, occupancy: 74 },
-  ];
-  const marketAverage = competitors.reduce((sum, hotel) => sum + hotel.price, 0) / competitors.length;
-
   return { horizon, setHorizon, roomType, setRoomType, setApplied, room, dates, soldNights,
-    revenue, availableNights, occupancy, adr, pending, range, competitors, marketAverage };
+    revenue, availableNights, occupancy, adr, pending, range };
 }
 
 const PricingContext = createContext<ReturnType<typeof usePricingState> | null>(null);
