@@ -1,7 +1,7 @@
-import MakcorpsPilot from "@/components/competitors/makcorps-pilot";
+import CompetitorPrices from "@/components/competitors/competitor-prices";
 
 export const metadata = { title: "Otai | Rakip Analizi" };
 
 export default function Page() {
-  return <MakcorpsPilot />;
+  return <CompetitorPrices />;
 }

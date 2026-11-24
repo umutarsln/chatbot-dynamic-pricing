@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { guardPilotRequest, parseCandidates, parseQuotes, validateStay } from "./makcorps-contract";
+import { guardPilotRequest, parseCandidates, parseQuotes, validateStay, matchHotel, defaultStay } from "./makcorps-contract";
+import { pilotHotels } from "@/data/pilot-hotels";
+
+describe("automatic matching", () => {
+  const candidate = { id: "123", name: "Akra Hotel, Antalya, Turkey", address: "Sirinyali Mah. Lara Caddesi No 24", location: "Antalya" };
+  it("requires a unique name, city, address and building number match", () => expect(matchHotel(pilotHotels[0], [candidate])?.id).toBe("123"));
+  it.each([{ name: "Akra V, Antalya" }, { address: "Lara Caddesi No 25" }, { address: "" }, { name: "Akra Hotel", location: "Izmir" }])("never chooses an uncertain property %j", (change) => expect(matchHotel(pilotHotels[0], [{ ...candidate, ...change }])).toBeUndefined());
+  it("does not choose the first of multiple matching properties", () => expect(matchHotel(pilotHotels[0], [candidate, { ...candidate, id: "456" }])).toBeUndefined());
+  it("builds initial stay from the Istanbul calendar across month boundaries", () => expect(defaultStay(new Date("2026-11-23T22:00:00Z"))).toMatchObject({ checkin: "2026-12-01", checkout: "2026-12-02" }));
+});
 
 describe("hotel matching", () => {
   it("retains addresses and IDs, excludes cities and malformed records without choosing a hotel", () => {

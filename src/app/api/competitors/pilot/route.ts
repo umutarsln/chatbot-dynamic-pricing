@@ -1,5 +1,5 @@
 import { guardPilotRequest, PilotError } from "@/services/competitors/makcorps-contract";
-import { runPilot } from "@/services/competitors/pilot";
+import { runPilot, getHotelPrices } from "@/services/competitors/pilot";
 
 const headers = { "Cache-Control": "no-store" };
 
@@ -28,7 +28,8 @@ export async function POST(request: Request) {
     try { body = JSON.parse(Buffer.concat(chunks).toString("utf8")); }
     catch { throw new PilotError("Geçersiz JSON."); }
     if (!body || typeof body !== "object" || Array.isArray(body)) throw new PilotError("Geçersiz istek.");
-    return Response.json(await runPilot(body as Record<string, unknown>), { headers });
+    const input = body as Record<string, unknown>;
+    return Response.json(input.action === "prices" ? await getHotelPrices(input) : await runPilot(input), { headers });
   } catch (error) {
     if (error instanceof PilotError) return Response.json({ error: error.message }, { status: error.status, headers: { ...headers, ...(error.status === 429 ? { "Retry-After": "60" } : {}) } });
     return Response.json({ error: "Pilot isteği tamamlanamadı." }, { status: 500, headers });

@@ -1,7 +1,36 @@
+import type { PilotHotel } from "@/data/pilot-hotels";
+
 export type HotelCandidate = { id: string; name: string; address: string; location: string };
 export type VendorQuote = { vendor: string; price: string | null; tax: string | null; total: string | null };
 export type Stay = { checkin: string; checkout: string; adults: number; rooms: number; currency: "TRY" | "EUR" | "USD" };
 export type RateResult = { hotelId: string; stay: Stay; fetchedAt: string; quotes: VendorQuote[] };
+export type HotelPrices = { hotel: string; status: "ready" | "empty" | "needs-mapping" | "error"; result?: RateResult; message?: string };
+export type PricesReport = { stay: Stay; fetchedAt: string; hotels: HotelPrices[] };
+
+export function defaultStay(now = new Date()): Stay {
+  const date = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Istanbul", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  const checkin = new Date(`${date}T00:00:00Z`);
+  checkin.setUTCDate(checkin.getUTCDate() + 7);
+  const checkout = new Date(checkin);
+  checkout.setUTCDate(checkout.getUTCDate() + 1);
+  return { checkin: checkin.toISOString().slice(0, 10), checkout: checkout.toISOString().slice(0, 10), adults: 2, rooms: 1, currency: "TRY" };
+}
+
+function normalize(value: string) {
+  return value.toLocaleLowerCase("tr-TR").replace(/ı/g, "i").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/gazi mustafa kemal/g, "gmk").replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+export function matchHotel(hotel: PilotHotel, candidates: HotelCandidate[]): HotelCandidate | undefined {
+  const name = (value: string) => normalize(value.split(",")[0]).split(" ").filter((word) => !["antalya", "hotel", "hotels", "resort", "spa", "the", "and"].includes(word)).join("");
+  const tokens = normalize(hotel.address).split(" ").filter((word) => !["mah", "mahallesi", "cad", "caddesi", "cd", "bulvari", "blv", "no", "mevkii", "antalya", "muratpasa", "konyaalti", "turkiye"].includes(word) && !/^\d{5}$/.test(word));
+  const numbers = tokens.filter((word) => /^\d+[a-z]?$/.test(word));
+  const matches = candidates.filter((candidate) => {
+    if (name(candidate.name) !== name(hotel.name) || !normalize(`${candidate.location} ${candidate.name}`).split(" ").includes("antalya")) return false;
+    const address = new Set(normalize(candidate.address).split(" "));
+    return new Set(tokens.filter((word) => address.has(word))).size >= 2 && numbers.every((number) => address.has(number));
+  });
+  return matches.length === 1 ? matches[0] : undefined;
+}
 
 export class PilotError extends Error {
   status: number;

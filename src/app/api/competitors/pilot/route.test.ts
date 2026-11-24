@@ -56,3 +56,35 @@ it("rejects oversized and malformed request bodies", async () => {
   const invalid = request({});
   expect((await POST(new Request(invalid.url, { method: "POST", headers: invalid.headers, body: "{" }))).status).toBe(400);
 });
+
+function batch(hotels: string[]) {
+  const start = new Date(); start.setUTCDate(start.getUTCDate() + 7);
+  const end = new Date(start); end.setUTCDate(end.getUTCDate() + 1);
+  return { action: "prices", hotels, checkin: start.toISOString().slice(0, 10), checkout: end.toISOString().slice(0, 10), adults: 2, rooms: 1, currency: "TRY" };
+}
+it("validates the full selected hotel list before any paid request", async () => {
+  const fetcher = vi.fn(); vi.stubGlobal("fetch", fetcher);
+  for (const hotels of [[], ["akra", "akra"], ["unknown"]]) expect((await POST(request(batch(hotels)))).status).toBe(400);
+  expect(fetcher).not.toHaveBeenCalled();
+});
+it("fetches all selected hotels, preserves partial failures and reuses confirmed IDs on the next landing", async () => {
+  const fetcher = vi.fn()
+    .mockResolvedValueOnce(Response.json([{ type: "HOTEL", document_id: "123", name: "Akra Hotel, Antalya", details: { address: "Lara Caddesi No 24", geo_name: "Antalya" } }]))
+    .mockResolvedValueOnce(Response.json({ comparison: [[{ vendor1: "Booking.com", price1: "TRY 120" }]] }))
+    .mockResolvedValueOnce(new Response("upstream failure", { status: 400 }))
+    .mockResolvedValueOnce(Response.json({ comparison: [] }));
+  vi.stubGlobal("fetch", fetcher);
+  const response = await POST(request(batch(["akra", "akra-v"])));
+  expect(response.status).toBe(200);
+  expect(await response.json()).toMatchObject({ hotels: [{ hotel: "akra", status: "ready", result: { hotelId: "123", stay: { currency: "TRY" } } }, { hotel: "akra-v", status: "error" }] });
+  expect(fetcher).toHaveBeenCalledTimes(3);
+  const next = await POST(request(batch(["akra"])));
+  expect(await next.json()).toMatchObject({ hotels: [{ hotel: "akra", status: "empty" }] });
+  expect(fetcher).toHaveBeenCalledTimes(4);
+  expect(fetcher.mock.calls[3][0].pathname).toBe("/hotel");
+});
+it("does not request prices for ambiguous matches or missing addresses", async () => {
+  const fetcher = vi.fn().mockResolvedValue(Response.json([{ type: "HOTEL", document_id: "123", name: "Akra Hotel, Antalya", details: {} }])); vi.stubGlobal("fetch", fetcher);
+  expect(await (await POST(request(batch(["akra"])))).json()).toMatchObject({ hotels: [{ status: "needs-mapping" }] });
+  expect(fetcher).toHaveBeenCalledTimes(1);
+});
